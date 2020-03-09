@@ -1,8 +1,8 @@
-var Autor = require('../models/author');
+var Author = require('../models/author');
 
-// Dislplay list of all Authors
+// Display list of all Authors.
 exports.author_list = function(req, res) {
-    res.send('NOT IMPLEMENDTED: Author list');
+    res.send('NOT IMPLEMENTED: Author list');
 };
 
 // Display detail page for a specific Author.
@@ -10,7 +10,7 @@ exports.author_detail = function(req, res) {
     res.send('NOT IMPLEMENTED: Author detail: ' + req.params.id);
 };
 
-// Diplay Author create form on GET.
+// Display Author create form on GET.
 exports.author_create_get = function(req, res) {
     res.send('NOT IMPLEMENTED: Author create GET');
 };
@@ -35,9 +35,7 @@ exports.author_update_get = function(req, res) {
     res.send('NOT IMPLEMENTED: Author update GET');
 };
 
-// Handle Author update POST.
+// Handle Author update on POST.
 exports.author_update_post = function(req, res) {
     res.send('NOT IMPLEMENTED: Author update POST');
 };
-
-

@@ -6,14 +6,14 @@ const logger = require('morgan')
 
 const indexRouter = require('./routes/index')
 const usersRouter = require('./routes/users')
-
+const catalogRouter = require('./routes/catalog') //Import routes for "catalog" area of site
 const app = express()
 
 
 // Set up mongoose connection
 const mongoose = require('mongoose')
 const mongoDB = 
-mongoose.connect(mongoDB, { useNewUrlParser: true })
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
@@ -30,6 +30,7 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/catalog', catalogRouter); // Add catalog routes to middleware chain
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
