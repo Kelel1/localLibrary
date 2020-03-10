@@ -1,3 +1,4 @@
+const moment = require('moment')
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
@@ -28,13 +29,21 @@ const AuthorSchema= new Schema(
     }
   
     return fullname
-  })
+  })  
   
   // Virtual for author's lifespan
   AuthorSchema
   .virtual('lifespan')
   .get(function () {
-    return (this.date_of_death.getYear() - this.date_of_birth.getYear()).toString()
+    if (!this.date_of_birth && !this.date_of_death) {
+      return '';
+    }
+    if (!this.date_of_death) {
+      return moment(this.date_of_birth).utc().format('MMMM Do, YYYY');
+    }    
+    return this.date_of_birth ?
+    moment(this.date_of_birth).utc().format('MMMM Do, YYYY') + ' - ' + moment(this.date_of_death).utc().format('MMMM Do, YYYY') : '';
+    
   })
   
   // Virtual for author's URL
