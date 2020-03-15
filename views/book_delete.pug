@@ -5,15 +5,26 @@ block content
 
   if book_instance.length
 
-    p #[strong Delete the following bookinstanced before attempting to delete this author.]
+    p #[strong Delete the following bookinstances before attempting to delete this author.]
 
     div(style='margin-left:20px;margin-top:20px')
 
       h4 Bookinstances
 
       dl
-      each bookinstance in book_instances
+      each bookinstance in book_instance
         dt
             a(href=bookinstance.url) #{bookinstance.book}
-  
+            dd #{bookinstance.status}
+      hr
+
+  else
+    p Do you reall want to delete this Book?
+
+    form(method='POST' action='')
+      .form-group
+        input#bookid.form-control(type='hidden', name='bookid', required='true', value=book._id)
+
+        button.btn.btn-primary(type='submit') Delete
+            
           
