@@ -150,23 +150,9 @@ exports.author_delete_post = function(req, res, next) {
 };
 
 // Display Author update form on GET.
-exports.author_update_get = function(req, res, next) {
+exports.author_update_get = function(req, res) {
     
-    // Get author, birth date/death date
-    async.parallel({
-      author: function(callback) {
-        Author.findById(req.params.id)
-      },
-    }, function(err, results) {
-        if (err) { return next(err); }
-        if (results.author==null) { // No results.
-            var err = new Error('Author not found');
-            err.status = 404;
-            return next(err); 
-
-        }
-        res.render('author_form', { title: 'Update Author', author: results.author });
-    });
+  res.render('author_form', { title: 'Update Author' });
 };
 
 // Handle Author update on POST.
