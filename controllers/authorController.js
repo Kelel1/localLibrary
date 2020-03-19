@@ -150,9 +150,23 @@ exports.author_delete_post = function(req, res, next) {
 };
 
 // Display Author update form on GET.
-exports.author_update_get = function(req, res) {
+exports.author_update_get = function(req, res, next) {
+
+  async.parallel({
+    author: function(callback) {
+      Author.findById(req.params.id).populate('date_of_birth').populate('date_of_death').exec(callback);
+    }
+  }, function(err, results) {
+    if (err) { return next(err); }
+    if (results.author==null) { // No results
+        var err = new Error('Author not found');
+        err.status = 404;
+        return next(err);
+    }
+    res.render('author_form', { title: 'Update Author', author: results.author });
+});
     
-  res.render('author_form', { title: 'Update Author' });
+  
 };
 
 // Handle Author update on POST.
@@ -187,14 +201,7 @@ exports.author_update_post = function(req, res) {[
     if (!errors.isEmpty()) {
       // There are errors. Render form again with sanitized values/error messages.
 
-      async.parallel({
-
-      }, function(err, results) {
-        if (err) { return next(err); }
-
-        res.render('author_form',  { title: 'Updated Author', author: author, errors: errors.array() });
-
-      });
+      res.render('author_form',  { title: 'Update Author', author: author, errors: errors.array() });
       return;
 
     }
@@ -204,7 +211,7 @@ exports.author_update_post = function(req, res) {[
             if (err) { return next(err); }
             // Successful = redirect to author detail page.
             res.redirect(theauthor.url);
-      })
+      });
     }
   }
 
