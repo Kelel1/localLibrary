@@ -128,13 +128,15 @@ exports.bookinstance_delete_post = function(req, res) {
   }, function(err, results) {
       if (err) { return next(err); }
       // Success
-      res.render('bookinstance_delete', { title: 'Delete Bookinstance', bookinstance: results.bookinstance });
+      // res.render('bookinstance_delete', { title: 'Delete Bookinstance', bookinstance: results.bookinstance });
       
+      else {
         BookInstance.findByIdAndRemove(req.body.bookinstanceid, function deleteBookinstance(err) {
           if (err) { return next(err); }
           // Success - go to bookinstance list
-          res.redirect('/catalog/bookinstance')
+            res.redirect('/catalog/bookinstances');
         })
+      }
       
   });
 };
