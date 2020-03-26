@@ -104,11 +104,8 @@ exports.author_delete_get = function(req, res, next) {
 
     async.parallel({
         author: function(callback) {
-            Author.findById(req.params.id).exec(callback)
-        },
-        authors_books: function(callback) {
-          Book.find({ 'author': req.params.id }).exec(callback)
-        },
+            Author.findById(req.params.id).populate('bornField').exec(callback)
+        },       
     }, function(err, results) {
         if (err) { return next(err); }
         if (results.author==null) { // No results.
@@ -152,25 +149,24 @@ exports.author_delete_post = function(req, res, next) {
 // Display Author update form on GET.
 exports.author_update_get = function(req, res, next) {
 
-  async.parallel({
-    author: function(callback) {
-      Author.findById(req.params.id).exec(callback);
-    }
-  }, function(err, results) {
-    if (err) { return next(err); }
-    if (results.author==null) { // No results
+    Author.findById(req.params.id, function(err, author) {
+      if (err) { return next(err); }
+      if (author == null) { // No results
         var err = new Error('Author not found');
         err.status = 404;
         return next(err);
     }
-    res.render('author_form', { title: 'Update Author', author: results.author });
-});
+    res.render('author_form', { title: 'Update Author', author: author });
+  });
+    
+    
+};
     
   
-};
+
 
 // Handle Author update on POST.
-exports.author_update_post = function(req, res) {[
+exports.author_update_post = [
 
 
   // Validate fields.
@@ -178,10 +174,10 @@ exports.author_update_post = function(req, res) {[
   body('family_name', 'Family name must not be empty').trim().isLength({ min: 1 }),
 
   // Sanitize fields.
-  sanitizeBody('first_name').escape,
-  sanitizeBody('family_name').escape,
-  sanitizeBody('date_of_birth').escape,
-  sanitizeBody('date_of_death').escape,
+  sanitizeBody('first_name').escape(),
+  sanitizeBody('family_name').escape(),
+  sanitizeBody('date_of_birth').escape(),
+  sanitizeBody('date_of_death').escape(),
 
   // Process request after validation and sanitization.
   (req, res, next) => {
@@ -215,4 +211,4 @@ exports.author_update_post = function(req, res) {[
     }
   }
 
-]};
+];
