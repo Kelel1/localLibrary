@@ -154,7 +154,7 @@ exports.author_update_get = function(req, res, next) {
 
   async.parallel({
     author: function(callback) {
-      Author.findById(req.params.id).populate('date_of_birth').populate('date_of_death').exec(callback);
+      Author.findById(req.params.id).exec(callback);
     }
   }, function(err, results) {
     if (err) { return next(err); }

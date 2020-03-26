@@ -34,7 +34,7 @@ const AuthorSchema= new Schema(
   // Virtual for author's lifespan
   AuthorSchema
   .virtual('lifespan')
-  .get(function () {
+  .get(function() {
     if (!this.date_of_birth && !this.date_of_death) {
       return '';
     }
@@ -45,11 +45,25 @@ const AuthorSchema= new Schema(
     moment(this.date_of_birth).utc().format('MMMM Do, YYYY') + ' - ' + moment(this.date_of_death).utc().format('MMMM Do, YYYY') : '';
     
   })
+
+  //  Virtual for author form date fields
+  AuthorSchema
+  .virtual('dateFields')
+  .get(function() {
+
+    if (this.date_of_birth) {
+      return moment(this.date_of_birth).utc().format('YYYY MM DD');
+    }
+    if (this.date_of_death) {
+      return moment(this.date_of_birth).utc().format('YYYY MM DD');
+    }    
+
+  })
   
   // Virtual for author's URL
   AuthorSchema
   .virtual('url')
-  .get(function () {
+  .get(function() {
     return '/catalog/author/' + this._id
   })
   
