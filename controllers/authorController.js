@@ -172,12 +172,13 @@ exports.author_update_post = [
   // Validate fields.
   body('first_name', 'First Name must not be empty').trim().isLength({ min: 1 }),
   body('family_name', 'Family name must not be empty').trim().isLength({ min: 1 }),
+  
 
   // Sanitize fields.
   sanitizeBody('first_name').escape(),
   sanitizeBody('family_name').escape(),
-  sanitizeBody('date_of_birth').escape(),
-  sanitizeBody('date_of_death').escape(),
+  sanitizeBody('date_of_birth').toDate(),
+  sanitizeBody('date_of_death').toDate(),
 
   // Process request after validation and sanitization.
   (req, res, next) => {

@@ -55,16 +55,22 @@ const AuthorSchema= new Schema(
 
   // })
   AuthorSchema
-  .virtual('bornField', {
-    ref: 'Author',
-    localField: 'authorId',
-    foreignField: '_id',
-    justOne: true
-  })
+  .virtual('bornField')
   .get(function(){
-    return moment(this.date_of_birth).utc().format('YYYY MM DD');  
+    if (this.date_of_birth) {
+      return moment(this.date_of_birth).utc().format('YYYY-MM-DD');
+    }  
+    
   });
   
+
+  AuthorSchema
+  .virtual('deathField')
+  .get(function(){
+    if (this.date_of_death) {
+      return moment(this.date_of_death).utc().format('YYYY-MM-DD');
+    }
+  });
   // Virtual for author's URL
   AuthorSchema
   .virtual('url')
