@@ -46,14 +46,6 @@ const AuthorSchema= new Schema(
     
   })
 
-  //  Virtual for author form date fields
-  // AuthorSchema
-  // .virtual('dateFields')
-  // .get(function() {
-
-  //   return moment(this.date_of_birth).utc().format('YYYY MM DD');  
-
-  // })
   AuthorSchema
   .virtual('bornField')
   .get(function(){
