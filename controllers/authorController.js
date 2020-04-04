@@ -3,7 +3,6 @@ var async = require('async');
 var Book = require('../models/book');
 
 const { body, validationResult } = require('express-validator');
-const { sanitizeBody } = require('express-validator');
 
 // Display list of all Authors.
 exports.author_list = function(req, res, next) {
@@ -61,10 +60,10 @@ exports.author_create_post = [
     body('date_of_death', 'Invalid date of death').optional({ checkFalsy: true }).isISO8601(),
 
     // Sanitize fields.
-    sanitizeBody('first_name').escape(),
-    sanitizeBody('family_name').escape(),
-    sanitizeBody('date_of_birth').toDate(),
-    sanitizeBody('date_of_death').toDate(),
+    body('first_name').escape(),
+    body('family_name').escape(),
+    body('date_of_birth').toDate(),
+    body('date_of_death').toDate(),
 
     // Process request after validation and sanitization.
     (req, res, next) => {
@@ -175,10 +174,10 @@ exports.author_update_post = [
   
 
   // Sanitize fields.
-  sanitizeBody('first_name').escape(),
-  sanitizeBody('family_name').escape(),
-  sanitizeBody('date_of_birth').toDate(),
-  sanitizeBody('date_of_death').toDate(),
+  body('first_name').escape(),
+  body('family_name').escape(),
+  body('date_of_birth').toDate(),
+  body('date_of_death').toDate(),
 
   // Process request after validation and sanitization.
   (req, res, next) => {

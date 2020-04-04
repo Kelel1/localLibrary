@@ -4,7 +4,6 @@ var async = require('async');
 var validator = require('express-validator');
 
 const { body, validationResult } = require('express-validator');
-const { sanitizeBody } = require('express-validator');
 
 
 // Display list of all Genre.
@@ -60,7 +59,7 @@ exports.genre_create_post =  [
   validator.body('name', 'Genre name required').trim().isLength({ min: 1 }),
   
   // Sanitize (escape) the name field.
-  validator.sanitizeBody('name').escape(),
+  validator.body('name').escape(),
 
   // Process request after validation and sanitization.
   (req, res, next) => {
@@ -178,7 +177,7 @@ exports.genre_update_post = [
 
 
   // Sanitize fields.
-  sanitizeBody('name').escape(),
+  body('name').escape(),
 
 
   // Process request after validation and sanitization.
