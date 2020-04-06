@@ -1,6 +1,7 @@
 var Author = require('../models/author');
 var async = require('async');
 var Book = require('../models/book');
+var debug = require('debug')('author');
 
 const { body, validationResult } = require('express-validator');
 
@@ -31,7 +32,8 @@ exports.author_detail = function(req, res, next) {
           .exec(callback)
         },
     }, function(err, results) {
-        if (err) { return next(err); } // Error in API usage.
+        if (err) { 
+          return next(err); } // Error in API usage.
         if (results.author==null) { // No results.
             var err = new Error('Author not found');
             err.status = 404;
@@ -149,7 +151,10 @@ exports.author_delete_post = function(req, res, next) {
 exports.author_update_get = function(req, res, next) {
 
     Author.findById(req.params.id, function(err, author) {
-      if (err) { return next(err); }
+      if (err) { 
+          debug('update error:' + err);
+          return next(err);
+       }
       if (author == null) { // No results
         var err = new Error('Author not found');
         err.status = 404;
