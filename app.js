@@ -16,7 +16,7 @@ const app = express();
 app.use(helmet());
 
 // Set up mongoose connection
-let mongoDB = process.env.MONGODB_URI;
+var mongoDB = process.env.MONGODB_URI;
 const mongoose = require('mongoose');
 mongoose.connect(`${mongoDB}`, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
