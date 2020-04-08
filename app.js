@@ -18,7 +18,7 @@ app.use(helmet());
 // Set up mongoose connection
 var mongoDB = process.env.MONGODB_URI;
 const mongoose = require('mongoose');
-mongoose.connect(`${mongoDB}`, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB Connected...'))
     .catch((err) => console.log(err));
 mongoose.Promise = global.Promise;
