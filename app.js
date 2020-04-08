@@ -1,3 +1,4 @@
+require('dotenv').config();
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
@@ -14,10 +15,9 @@ const app = express();
 
 app.use(helmet());
 
-
 // Set up mongoose connection
-const mongoose = require('mongoose')
-const mongoDB = 
+let mongoDB = process.env.MONGODB_URI;
+const mongoose = require('mongoose');
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
