@@ -16,14 +16,12 @@ const app = express();
 app.use(helmet());
 
 // Set up mongoose connection
-// var mongoDB = process.env.MONGODB_URI;
+var mongoDB = process.env.MONGODB_URI;
 const mongoose = require('mongoose');
-mongoose.connect(`mongodb+srv://Kelder:NDjbWuZNmrFrlqPW@cluster0-pscez.mongodb.net/local_library?retryWrites=true&w=majority`, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB Connected...'))
-    .catch((err) => console.log(err));
+mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true});
 mongoose.Promise = global.Promise;
-const db = mongoose.connection
-db.on('error', console.error.bind(console, 'MongoDB connection error:'))
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 
 // view engine setup
