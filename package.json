@@ -20,7 +20,7 @@
     "helmet": "^3.22.0",
     "http-errors": "~1.6.3",
     "moment": "^2.24.0",
-    "mongoose": "^5.9.7",
+    "mongoose": "^5.9.9",
     "morgan": "~1.9.1",
     "nodemon": "^2.0.3",
     "pug": "^2.0.4"
